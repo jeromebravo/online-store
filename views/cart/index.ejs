@@ -1,0 +1,57 @@
+<%- include("../partials/header") %>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12 text-center text-md-left">
+            <h1><i class="fas fa-shopping-cart"></i> CART</h1>
+        </div>
+
+        <div class="col-md-8 mt-3">
+            <% if(customer.cart.orders.length !== 0) { %>
+                <% for(let order of customer.cart.orders) { %>
+                    <div class="container">
+                        <div class="row box mb-2 p-3">
+                            <div class="col-6 mt-auto mb-auto">
+                                <img class="img-fluid" src="<%= order.item.image %>">
+                            </div>
+                            <div class="col-6 mt-auto mb-auto">
+                                <h4><%= order.item.brand %> <%= order.item.name %></h4>
+                                <p class="lead">Price: ₱<%= order.item.price %>.00</p>
+                                <p class="lead">Quantity: <%= order.quantity %></p>
+                                <hr>
+                                <form class="d-inline" action="/cart/<%= order._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div class="text-center">
+                    <img class="img-fluid" src="https://www.supplyvan.com/media/new_images/rsz_empty-cart.png">
+                </div>
+            <% } %>
+            
+        </div>
+
+        <div class="col-md-4">
+            <hr>
+            <p class="subtotal">Subtotal: <span class="float-right">₱<%= customer.cart.subtotal %>.00</span></p>
+            <% if(customer.cart.orders.length !== 0) { %>
+                <p class="subtotal">Shipping Fee: <span class="float-right">₱100.00</span></p>
+                <hr>
+                <p class="total">Total: <span class="float-right">₱<%= customer.cart.total %>.00</span></p>
+            <% } else { %>
+                <p class="subtotal">Shipping Fee: <span class="float-right">₱0.00</span></p>
+                <hr>
+                <p class="total">Total: <span class="float-right">₱0.00</span></p>
+            <% } %>
+            <hr>
+            <form action="/cart/checkout" method="GET">
+                <button class="btn btn-primary btn-block mb-2">Checkout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>

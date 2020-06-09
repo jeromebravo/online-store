@@ -1,0 +1,41 @@
+<%- include("../partials/header") %>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-10 box d-md-flex py-3 m-auto">
+            <div class="col-md-7">
+                <img class="img-fluid" src="<%= item.image %>">
+            </div>
+    
+            <div class="col-md-5">
+                <h1><%= item.brand %></h1>
+                <h4><%= item.name %></h4>
+                <hr>
+                <h4 class="text-primary">₱ <%= item.price %>.00</h4>
+                <hr>
+                <form action="/items/<%= item._id %>/checkout" method="GET">
+                    <div class="form-group">
+                        <label for="quantity">Quantity <span class="text-danger">*</span></label>
+                        <% let max; %>
+                        <% if(item.stocks > 10) { %>
+                            <% max = 10; %>
+                        <% } else { %>
+                            <% max = item.stocks %>
+                        <% } %>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="<%= max %>" required>
+                     </div>
+                    <button id="buy" class="btn btn-primary btn-block" type="submit">Buy now</button>
+                    <button id="cart" class="btn btn-warning btn-block" type="submit">Add to cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#cart").on("click", function() {
+        $("form").attr("action", "/items/<%= item._id %>/cart");
+    });
+</script>
+
+<%- include("../partials/footer") %>

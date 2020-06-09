@@ -1,0 +1,48 @@
+<%- include("../partials/header") %>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12 text-center text-md-left">
+            <h1><i class="fas fa-check-circle"></i> CONFIRM ORDER</h1>
+        </div>
+
+        <div class="col-md-8 mt-3">
+            <% for(let order of orders.orders) { %>
+                <div class="container">
+                    <div class="row box mb-2 p-3">
+                        <div class="col-6 mt-auto mb-auto">
+                            <img class="img-fluid" src="<%= order.item.image %>">
+                        </div>
+                        <div class="col-6 mt-auto mb-auto">
+                            <h4><%= order.item.brand %> <%= order.item.name %></h4>
+                            <p class="lead">Price: ₱<%= order.item.price %>.00</p>
+                            <p class="lead">Quantity: <%= order.quantity %></p>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="col-md-4">
+            <hr>
+            <p>Customer name: <%= customer.name %></p>
+            <p>Address: <%= customer.address %></p>
+            <p>Email: <%= customer.email %></p>
+            <p>Contact: <%= customer.contact %></p>
+            <hr>
+            <p>Estimated delivery: <%= estimated %></p>
+            <hr>
+            <p class="subtotal">Subtotal: <span class="float-right">₱<%= orders.subtotal %>.00</span></p>
+            <p class="subtotal">Shipping Fee: <span class="float-right">₱100.00</span></p>
+            <hr>
+            <p class="total">Total: <span class="float-right">₱<%= orders.total %>.00</span></p>
+            <hr>
+            <form action="<%= url %>" method="POST">
+                <button class="btn btn-primary btn-block mb-2">Place order</button>
+            </form>
+            <a class="btn btn-danger btn-block" href="/">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>
